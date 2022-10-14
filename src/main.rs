@@ -2,6 +2,8 @@ mod decks;
 mod game;
 mod game_type;
 mod player;
+mod player_state;
+mod reservation;
 mod round;
 mod round_player;
 mod rule_set;
