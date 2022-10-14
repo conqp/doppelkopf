@@ -28,4 +28,12 @@ impl Round {
     pub fn game_type(&self) -> &Option<GameType> {
         &self.game_type
     }
+
+    pub fn all_ready(&self) -> bool {
+        self.players.iter().all(|player| player.is_ready())
+    }
+
+    pub fn all_teamed_up(&self) -> bool {
+        self.players.iter().all(|player| player.teamed_up())
+    }
 }
