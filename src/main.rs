@@ -9,6 +9,7 @@ mod round_player;
 mod rule_set;
 mod solo_type;
 mod standard_game;
+mod team;
 
 fn main() {
     println!("Hello, world!");

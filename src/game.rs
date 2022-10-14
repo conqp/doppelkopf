@@ -2,7 +2,7 @@ use crate::player::Player;
 use crate::round::Round;
 
 #[derive(Debug)]
-pub struct Game<'a> {
+pub struct Game {
     players: [Player; 4],
-    rounds: Vec<Round<'a>>,
+    rounds: Vec<Round>,
 }
