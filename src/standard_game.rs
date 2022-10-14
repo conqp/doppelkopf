@@ -2,7 +2,7 @@ use crate::rule_set::RuleSet;
 use cardlib::{Card, Face, Suit};
 use std::cmp::Ordering;
 
-const TRUMPS: [Card; 13] = [
+pub const TRUMPS: [Card; 13] = [
     Card::new(Suit::Diamonds, Face::Nine),
     Card::new(Suit::Diamonds, Face::King),
     Card::new(Suit::Diamonds, Face::Ten),

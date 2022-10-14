@@ -10,7 +10,10 @@ mod rule_set;
 mod solo_type;
 mod standard_game;
 mod team;
+use standard_game::TRUMPS;
 
 fn main() {
-    println!("Hello, world!");
+    for card in TRUMPS {
+        println!("{}", card);
+    }
 }
