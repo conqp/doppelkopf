@@ -75,4 +75,11 @@ impl RoundPlayer {
     pub fn deal(&mut self, hand: Vec<Card>) {
         self.hand = hand
     }
+
+    pub fn play(&mut self, index: usize) -> Option<Card> {
+        match self.hand.get(index) {
+            Some(_) => Some(self.hand.remove(index)),
+            None => None,
+        }
+    }
 }
