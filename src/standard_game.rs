@@ -10,10 +10,6 @@ pub struct StandardGame {
 }
 
 impl StandardGame {
-    pub fn new() -> Self {
-        Self::default()
-    }
-
     fn compare_played_trump(&self, played_index: usize, lying: &Card) -> Ordering {
         match self.trumps.iter().position(|card| card == lying) {
             Some(lying_index) => played_index.cmp(&lying_index),
