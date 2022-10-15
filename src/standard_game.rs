@@ -42,6 +42,10 @@ impl StandardGame {
         }
     }
 
+    fn is_trump(&self, card: &Card) -> bool {
+        self.trumps.iter().any(|trump| card == trump)
+    }
+
     fn serves_trump(&self, hand: &[Card], played: &Card) -> bool {
         if self.is_trump(played) {
             true
@@ -82,11 +86,7 @@ impl RuleSet for StandardGame {
         }
     }
 
-    fn is_trump(&self, card: &Card) -> bool {
-        self.trumps.iter().any(|trump| card == trump)
-    }
-
-    fn serves(&self, hand: &Vec<Card>, played: &Card, lying: &Card) -> bool {
+    fn serves(&self, hand: &[Card], played: &Card, lying: &Card) -> bool {
         if self.is_trump(lying) {
             self.serves_trump(hand, played)
         } else if !self.is_trump(played) && played.suit() == lying.suit() {
