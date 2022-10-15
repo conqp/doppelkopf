@@ -25,7 +25,7 @@ impl Trick {
     }
 
     pub fn play(&mut self, player: &Player, card: Card) -> TurnResult {
-        if self.current().id() != player.id() {
+        if self.current().uuid() != player.uuid() {
             TurnResult::NotYourTurn
         } else {
             match self.cards.clone().last() {

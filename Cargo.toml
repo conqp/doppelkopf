@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 cardlib = { git = "https://github.com/conqp/cardlib.git", branch = "main"}
 rand = "*"
+uuid = { version = "*", features = ["v4"] }

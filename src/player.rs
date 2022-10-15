@@ -1,23 +1,24 @@
 use std::fmt::{Display, Formatter};
+use uuid::Uuid;
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Player {
-    id: u64,
+    uuid: Uuid,
     name: String,
     points: i64,
 }
 
 impl Player {
-    pub fn new(id: u64, name: impl Into<String>) -> Self {
+    pub fn new(name: impl Into<String>) -> Self {
         Self {
-            id,
+            uuid: Uuid::new_v4(),
             name: name.into(),
             points: 0,
         }
     }
 
-    pub fn id(&self) -> u64 {
-        self.id
+    pub fn uuid(&self) -> &Uuid {
+        &self.uuid
     }
 
     pub fn name(&self) -> &String {
@@ -35,6 +36,6 @@ impl Player {
 
 impl Display for Player {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "#{} {}: {}", self.id, self.name, self.points)
+        write!(f, "#{} {}: {}", self.uuid, self.name, self.points)
     }
 }

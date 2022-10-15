@@ -16,10 +16,10 @@ impl Round {
     pub fn new(players: [Player; 4], deck: Vec<Card>) -> Self {
         Self {
             players: [
-                RoundPlayer::new(players[0].id()),
-                RoundPlayer::new(players[1].id()),
-                RoundPlayer::new(players[2].id()),
-                RoundPlayer::new(players[3].id()),
+                RoundPlayer::new(players[0].uuid()),
+                RoundPlayer::new(players[1].uuid()),
+                RoundPlayer::new(players[2].uuid()),
+                RoundPlayer::new(players[3].uuid()),
             ],
             deck,
             trick: Vec::new(),

@@ -2,10 +2,11 @@ use crate::bidding::Bidding;
 use crate::player_state::PlayerState;
 use crate::team::Team;
 use cardlib::Card;
+use uuid::Uuid;
 
 #[derive(Debug)]
 pub struct RoundPlayer {
-    id: u64,
+    uuid: Uuid,
     hand: Vec<Card>,
     tricks: Vec<[Card; 4]>,
     state: Option<PlayerState>,
@@ -15,9 +16,9 @@ pub struct RoundPlayer {
 }
 
 impl RoundPlayer {
-    pub fn new(id: u64) -> Self {
+    pub fn new(uuid: &Uuid) -> Self {
         Self {
-            id,
+            uuid: *uuid,
             hand: Vec::new(),
             tricks: Vec::new(),
             state: None,
@@ -27,8 +28,8 @@ impl RoundPlayer {
         }
     }
 
-    pub fn id(&self) -> u64 {
-        self.id
+    pub fn uuid(&self) -> &Uuid {
+        &self.uuid
     }
 
     pub fn hand(&self) -> &Vec<Card> {
