@@ -20,25 +20,38 @@ pub const TRUMPS: [Card; 13] = [
 const FACES: [Face; 4] = [Face::Nine, Face::King, Face::Ten, Face::Ace];
 
 #[derive(Debug)]
-pub struct StandardGame {}
+pub struct StandardGame {
+    trumps: [Card; 13],
+    faces: [Face; 4],
+}
+
+impl StandardGame {
+    pub fn new() -> Self {
+        Self {
+            trumps: TRUMPS,
+            faces: FACES,
+        }
+    }
+}
 
 impl RuleSet for StandardGame {
-    fn compare(played: &Card, lying: &Card) -> Ordering {
-        match TRUMPS.iter().position(|card| card == played) {
-            Some(played) => match TRUMPS.iter().position(|card| card == lying) {
+    fn compare(&self, played: &Card, lying: &Card) -> Ordering {
+        match self.trumps.iter().position(|card| card == played) {
+            Some(played) => match self.trumps.iter().position(|card| card == lying) {
                 Some(lying) => played.cmp(&lying),
                 None => Ordering::Greater,
             },
-            None => match TRUMPS.iter().position(|card| card == lying) {
+            None => match self.trumps.iter().position(|card| card == lying) {
                 Some(_) => Ordering::Less,
                 None => {
                     if played.suit() == lying.suit() {
-                        FACES
+                        self.faces
                             .iter()
                             .position(|face| face == played.face())
                             .unwrap_or(0)
                             .cmp(
-                                &FACES
+                                &self
+                                    .faces
                                     .iter()
                                     .position(|face| face == lying.face())
                                     .unwrap_or(0),
@@ -51,18 +64,18 @@ impl RuleSet for StandardGame {
         }
     }
 
-    fn is_trump(card: &Card) -> bool {
-        TRUMPS.iter().any(|trump| card == trump)
+    fn is_trump(&self, card: &Card) -> bool {
+        self.trumps.iter().any(|trump| card == trump)
     }
 
-    fn serves(hand: Vec<Card>, played: &Card, lying: &Card) -> bool {
-        if Self::is_trump(lying) {
-            if Self::is_trump(played) {
+    fn serves(&self, hand: Vec<Card>, played: &Card, lying: &Card) -> bool {
+        if self.is_trump(lying) {
+            if self.is_trump(played) {
                 true
             } else {
-                hand.iter().all(|card| !Self::is_trump(card))
+                hand.iter().all(|card| !self.is_trump(card))
             }
-        } else if !Self::is_trump(played) && played.suit() == lying.suit() {
+        } else if !self.is_trump(played) && played.suit() == lying.suit() {
             true
         } else {
             hand.iter().all(|card| card.suit() != lying.suit())
