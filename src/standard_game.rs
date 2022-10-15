@@ -13,6 +13,46 @@ impl StandardGame {
     pub fn new() -> Self {
         Self::default()
     }
+
+    fn compare_played_trump(&self, played_index: usize, lying: &Card) -> Ordering {
+        match self.trumps.iter().position(|card| card == lying) {
+            Some(lying_index) => played_index.cmp(&lying_index),
+            None => Ordering::Greater,
+        }
+    }
+
+    fn compare_played_fail(&self, played: &Card, lying: &Card) -> Ordering {
+        match self.trumps.iter().position(|card| card == lying) {
+            Some(_) => Ordering::Less,
+            None => self.compare_lying_fail(played, lying),
+        }
+    }
+
+    fn compare_lying_fail(&self, played: &Card, lying: &Card) -> Ordering {
+        if played.suit() == lying.suit() {
+            self.faces
+                .iter()
+                .position(|face| face == played.face())
+                .unwrap_or(0)
+                .cmp(
+                    &self
+                        .faces
+                        .iter()
+                        .position(|face| face == lying.face())
+                        .unwrap_or(0),
+                )
+        } else {
+            Ordering::Less
+        }
+    }
+
+    fn serves_trump(&self, hand: &[Card], played: &Card) -> bool {
+        if self.is_trump(played) {
+            true
+        } else {
+            hand.iter().all(|card| !self.is_trump(card))
+        }
+    }
 }
 
 impl Default for StandardGame {
@@ -41,30 +81,8 @@ impl Default for StandardGame {
 impl RuleSet for StandardGame {
     fn compare(&self, played: &Card, lying: &Card) -> Ordering {
         match self.trumps.iter().position(|card| card == played) {
-            Some(played) => match self.trumps.iter().position(|card| card == lying) {
-                Some(lying) => played.cmp(&lying),
-                None => Ordering::Greater,
-            },
-            None => match self.trumps.iter().position(|card| card == lying) {
-                Some(_) => Ordering::Less,
-                None => {
-                    if played.suit() == lying.suit() {
-                        self.faces
-                            .iter()
-                            .position(|face| face == played.face())
-                            .unwrap_or(0)
-                            .cmp(
-                                &self
-                                    .faces
-                                    .iter()
-                                    .position(|face| face == lying.face())
-                                    .unwrap_or(0),
-                            )
-                    } else {
-                        Ordering::Less
-                    }
-                }
-            },
+            Some(played_index) => self.compare_played_trump(played_index, lying),
+            None => self.compare_played_fail(played, lying),
         }
     }
 
@@ -74,11 +92,7 @@ impl RuleSet for StandardGame {
 
     fn serves(&self, hand: &Vec<Card>, played: &Card, lying: &Card) -> bool {
         if self.is_trump(lying) {
-            if self.is_trump(played) {
-                true
-            } else {
-                hand.iter().all(|card| !self.is_trump(card))
-            }
+            self.serves_trump(hand, played)
         } else if !self.is_trump(played) && played.suit() == lying.suit() {
             true
         } else {
