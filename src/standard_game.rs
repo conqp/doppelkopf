@@ -1,23 +1,7 @@
 use crate::rule_set::RuleSet;
 use cardlib::{Card, Face, Suit};
 use std::cmp::Ordering;
-
-pub const TRUMPS: [Card; 13] = [
-    Card::new(Suit::Diamonds, Face::Nine),
-    Card::new(Suit::Diamonds, Face::King),
-    Card::new(Suit::Diamonds, Face::Ten),
-    Card::new(Suit::Diamonds, Face::Ace),
-    Card::new(Suit::Diamonds, Face::Jack),
-    Card::new(Suit::Hearts, Face::Jack),
-    Card::new(Suit::Spades, Face::Jack),
-    Card::new(Suit::Clubs, Face::Jack),
-    Card::new(Suit::Diamonds, Face::Queen),
-    Card::new(Suit::Hearts, Face::Queen),
-    Card::new(Suit::Spades, Face::Queen),
-    Card::new(Suit::Clubs, Face::Queen),
-    Card::new(Suit::Hearts, Face::Ten),
-];
-const FACES: [Face; 4] = [Face::Nine, Face::King, Face::Ten, Face::Ace];
+use std::fmt::Debug;
 
 #[derive(Debug)]
 pub struct StandardGame {
@@ -27,9 +11,29 @@ pub struct StandardGame {
 
 impl StandardGame {
     pub fn new() -> Self {
+        Self::default()
+    }
+}
+
+impl Default for StandardGame {
+    fn default() -> Self {
         Self {
-            trumps: TRUMPS,
-            faces: FACES,
+            trumps: [
+                Card::new(Suit::Diamonds, Face::Nine),
+                Card::new(Suit::Diamonds, Face::King),
+                Card::new(Suit::Diamonds, Face::Ten),
+                Card::new(Suit::Diamonds, Face::Ace),
+                Card::new(Suit::Diamonds, Face::Jack),
+                Card::new(Suit::Hearts, Face::Jack),
+                Card::new(Suit::Spades, Face::Jack),
+                Card::new(Suit::Clubs, Face::Jack),
+                Card::new(Suit::Diamonds, Face::Queen),
+                Card::new(Suit::Hearts, Face::Queen),
+                Card::new(Suit::Spades, Face::Queen),
+                Card::new(Suit::Clubs, Face::Queen),
+                Card::new(Suit::Hearts, Face::Ten),
+            ],
+            faces: [Face::Nine, Face::King, Face::Ten, Face::Ace],
         }
     }
 }
