@@ -72,7 +72,7 @@ impl RuleSet for StandardGame {
         self.trumps.iter().any(|trump| card == trump)
     }
 
-    fn serves(&self, hand: Vec<Card>, played: &Card, lying: &Card) -> bool {
+    fn serves(&self, hand: &Vec<Card>, played: &Card, lying: &Card) -> bool {
         if self.is_trump(lying) {
             if self.is_trump(played) {
                 true

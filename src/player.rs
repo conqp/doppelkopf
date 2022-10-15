@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq)]
 pub struct Player {
     id: u64,
     name: String,

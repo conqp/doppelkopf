@@ -6,7 +6,7 @@ use cardlib::Card;
 #[derive(Debug)]
 pub struct RoundPlayer {
     id: u64,
-    hand: Option<Vec<Card>>,
+    hand: Vec<Card>,
     tricks: Vec<[Card; 4]>,
     state: Option<PlayerState>,
     team: Option<Team>,
@@ -18,7 +18,7 @@ impl RoundPlayer {
     pub fn new(id: u64) -> Self {
         Self {
             id,
-            hand: None,
+            hand: Vec::new(),
             tricks: Vec::new(),
             state: None,
             team: None,
@@ -31,7 +31,7 @@ impl RoundPlayer {
         self.id
     }
 
-    pub fn hand(&self) -> &Option<Vec<Card>> {
+    pub fn hand(&self) -> &Vec<Card> {
         &self.hand
     }
 
@@ -72,6 +72,6 @@ impl RoundPlayer {
     }
 
     pub fn deal(&mut self, hand: Vec<Card>) {
-        self.hand = Some(hand)
+        self.hand = hand
     }
 }

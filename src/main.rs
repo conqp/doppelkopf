@@ -11,11 +11,7 @@ mod rule_set;
 mod solo_type;
 mod standard_game;
 mod team;
+mod trick;
+mod turn_result;
 
-use standard_game::TRUMPS;
-
-fn main() {
-    for card in TRUMPS {
-        println!("{}", card);
-    }
-}
+fn main() {}
